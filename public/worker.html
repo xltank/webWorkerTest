@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script type="text/javascript">
+
+        var globalVar = 1;
+
+        /*var startTime = new Date();
+        console.log(startTime);
+        var sum=0 ;
+        for(var i=0; i<999999999; i++){  // !!! blocker codes
+            sum += Math.sqrt(i)*Math.sqrt(i)*Math.sqrt(i)*Math.sqrt(i)*Math.sqrt(i);
+        }
+        console.log(sum, new Date()-startTime);  // timecost  7840*/
+
+        if(window.Worker){
+            var myWorker = new Worker('javascripts/worker.js');
+            myWorker.onmessage = function(e){
+                console.log('Got result from worker ', e.data);
+            }
+            myWorker.onerror = function(e){
+                console.log('Error from worker', e);
+                myWorker.terminate();
+            }
+            myWorker.postMessage([1,2,3]);
+
+        }
+    </script>
+</head>
+<body>
+    This is a test page.
+</body>
+</html>
